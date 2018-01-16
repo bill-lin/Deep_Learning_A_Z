@@ -44,6 +44,7 @@ X_test = sc.transform(X_test)
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers import Dropout
 
 # Initialising the ANN
 classifier = Sequential()
@@ -51,7 +52,7 @@ classifier = Sequential()
 # Adding the input layer and the first hidden layer
 """ NOTE: number of neural units = 6 is suggested by (input_dim=11 + output_dim=1)/2 = (11+1)/2 = 6"""
 # TODO after some experiment, it seems accuracy increased if units increased to 10 - 16
-classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu', input_dim = 11))
+classifier.add(Dense(units = 11, kernel_initializer = 'uniform', activation = 'relu', input_dim = 11))
 
 # Adding the second hidden layer
 classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu'))
@@ -95,6 +96,12 @@ Has Credit Card: Yes
 Is Active Member: Yes
 Estimated Salary: 50000"""
 
+"""this is a row in a 2D array """
 exampleX = np.array([[0.0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])
-new_prediction = classifier.predict(sc.transform(exampleX))
+"""apply same scale transform """
+exampleX_transform = sc.transform(exampleX)
+
+new_prediction = classifier.predict(exampleX_transform)
 print ('Example X will leave = {} as {}'.format(new_prediction, new_prediction > 0.5))
+
+
